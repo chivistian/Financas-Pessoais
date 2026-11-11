@@ -1,0 +1,15 @@
+# Sistema operacional / editores
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+
+# Dependências e logs
+vendor/
+node_modules/
+*.log
+
+# Configuração local (se criar uma cópia com credenciais reais)
+config/config.local.php
+.env

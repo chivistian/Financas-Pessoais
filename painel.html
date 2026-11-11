@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel - Finanças Pessoais</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<div class="app">
+  <!-- ===== Menu lateral ===== -->
+  <aside class="sidebar">
+    <div class="marca"><span class="marca-logo">R$</span> Finanças</div>
+    <nav class="menu">
+      <a href="#painel" data-view="painel">Painel</a>
+      <a href="#lancamentos" data-view="lancamentos">Lançamentos</a>
+      <a href="#contas" data-view="contas">Contas</a>
+      <a href="#categorias" data-view="categorias">Categorias</a>
+      <a href="#relatorios" data-view="relatorios">Relatórios</a>
+    </nav>
+    <div class="usuario-box">
+      <div>
+        <strong id="usuario-nome"></strong><br>
+        <small id="usuario-email"></small>
+      </div>
+      <button type="button" class="btn" id="btn-sair">Sair</button>
+    </div>
+  </aside>
+
+  <main class="conteudo">
+    <!-- ===== Painel ===== -->
+    <section class="view" id="view-painel">
+      <header class="view-header">
+        <div>
+          <h1>Olá, <span id="saudacao"></span></h1>
+          <p class="muted" id="painel-mes"></p>
+        </div>
+        <div class="acoes">
+          <button type="button" class="btn btn-receita" data-novo="R">+ Receita</button>
+          <button type="button" class="btn btn-despesa" data-novo="D">+ Despesa</button>
+        </div>
+      </header>
+
+      <div class="cards">
+        <div class="card stat destaque"><span class="stat-label">Saldo total</span><strong id="stat-saldo">—</strong></div>
+        <div class="card stat"><span class="stat-label">Receitas do mês</span><strong class="pos" id="stat-receitas">—</strong></div>
+        <div class="card stat"><span class="stat-label">Despesas do mês</span><strong class="neg" id="stat-despesas">—</strong></div>
+        <div class="card stat"><span class="stat-label">Resultado do mês</span><strong id="stat-resultado">—</strong></div>
+      </div>
+
+      <div class="grade-2">
+        <div class="card">
+          <h2>Saldo por conta</h2>
+          <ul class="lista-contas" id="painel-contas"></ul>
+        </div>
+        <div class="card">
+          <h2>Despesas do mês por categoria</h2>
+          <div class="barras" id="painel-categorias"></div>
+        </div>
+      </div>
+
+      <div class="grade-2">
+        <div class="card">
+          <h2>Receitas x despesas (6 meses)</h2>
+          <div class="evolucao" id="painel-evolucao"></div>
+          <div class="legenda"><span><i style="background:var(--verde)"></i>Receitas</span><span><i style="background:var(--vermelho)"></i>Despesas</span></div>
+        </div>
+        <div class="card">
+          <h2>Últimos lançamentos</h2>
+          <div class="tabela-wrap" id="painel-ultimos"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Lançamentos ===== -->
+    <section class="view oculto" id="view-lancamentos">
+      <header class="view-header">
+        <div>
+          <h1>Lançamentos</h1>
+          <p class="muted">Registre, edite e exclua receitas e despesas.</p>
+        </div>
+        <div class="acoes">
+          <button type="button" class="btn btn-receita" data-novo="R">+ Receita</button>
+          <button type="button" class="btn btn-despesa" data-novo="D">+ Despesa</button>
+        </div>
+      </header>
+
+      <div class="card">
+        <form class="filtros" id="form-filtros">
+          <div class="campo"><label for="f-inicio">De</label><input type="date" id="f-inicio" name="inicio"></div>
+          <div class="campo"><label for="f-fim">Até</label><input type="date" id="f-fim" name="fim"></div>
+          <div class="campo">
+            <label for="f-tipo">Tipo</label>
+            <select id="f-tipo" name="tipo">
+              <option value="">Todos</option>
+              <option value="R">Receitas</option>
+              <option value="D">Despesas</option>
+            </select>
+          </div>
+          <div class="campo"><label for="f-conta">Conta</label><select id="f-conta" name="conta_id"></select></div>
+          <div class="campo"><label for="f-categoria">Categoria</label><select id="f-categoria" name="categoria_id"></select></div>
+          <button type="submit" class="btn btn-primario">Filtrar</button>
+        </form>
+        <div class="resumo-filtro" id="lanc-resumo"></div>
+        <div class="tabela-wrap" id="lanc-tabela"></div>
+      </div>
+    </section>
+
+    <!-- ===== Contas ===== -->
+    <section class="view oculto" id="view-contas">
+      <header class="view-header">
+        <div>
+          <h1>Contas</h1>
+          <p class="muted">Saldo total: <strong id="contas-total"></strong></p>
+        </div>
+        <div class="acoes"><button type="button" class="btn btn-primario" id="btn-nova-conta">+ Nova conta</button></div>
+      </header>
+      <div class="grade-contas" id="grade-contas"></div>
+    </section>
+
+    <!-- ===== Categorias ===== -->
+    <section class="view oculto" id="view-categorias">
+      <header class="view-header">
+        <div>
+          <h1>Categorias</h1>
+          <p class="muted">Organize seus lançamentos por categoria.</p>
+        </div>
+        <div class="acoes"><button type="button" class="btn btn-primario" id="btn-nova-categoria">+ Nova categoria</button></div>
+      </header>
+      <div class="grade-2">
+        <div class="card"><h2 class="pos">Receitas</h2><ul class="lista-cat" id="cat-R"></ul></div>
+        <div class="card"><h2 class="neg">Despesas</h2><ul class="lista-cat" id="cat-D"></ul></div>
+      </div>
+    </section>
+
+    <!-- ===== Relatórios ===== -->
+    <section class="view oculto" id="view-relatorios">
+      <header class="view-header">
+        <div>
+          <h1>Relatório por categoria</h1>
+          <p class="muted">Gere o relatório mensal ou filtre por período e categoria.</p>
+        </div>
+        <div class="acoes"><button type="button" class="btn" id="btn-imprimir">Imprimir</button></div>
+      </header>
+
+      <form class="card form-relatorio" id="form-relatorio">
+        <div class="modo-relatorio">
+          <label><input type="radio" name="modo" value="mes" checked> Mensal</label>
+          <label><input type="radio" name="modo" value="periodo"> Período</label>
+        </div>
+        <div class="campo" data-modo="mes"><label for="r-mes">Mês</label><input type="month" id="r-mes" name="mes"></div>
+        <div class="campo oculto" data-modo="periodo"><label for="r-inicio">De</label><input type="date" id="r-inicio" name="inicio"></div>
+        <div class="campo oculto" data-modo="periodo"><label for="r-fim">Até</label><input type="date" id="r-fim" name="fim"></div>
+        <div class="campo"><label for="r-categoria">Categoria</label><select id="r-categoria" name="categoria_id"></select></div>
+        <button type="submit" class="btn btn-primario">Gerar relatório</button>
+      </form>
+
+      <div id="relatorio-saida"></div>
+    </section>
+  </main>
+</div>
+
+<!-- ===== Modal: lançamento ===== -->
+<dialog id="dlg-lancamento">
+  <form id="form-lancamento" novalidate>
+    <h2 id="lanc-titulo">Novo lançamento</h2>
+    <input type="hidden" name="id">
+    <input type="hidden" name="tipo" value="D">
+    <div class="segmentado" id="lanc-tipo">
+      <button type="button" data-tipo="R">Receita</button>
+      <button type="button" data-tipo="D">Despesa</button>
+    </div>
+    <div class="linha-campos">
+      <div class="campo"><label for="l-valor">Valor (R$)</label><input id="l-valor" name="valor" type="number" step="0.01" min="0.01" inputmode="decimal" required></div>
+      <div class="campo"><label for="l-data">Data</label><input id="l-data" name="data" type="date" required></div>
+    </div>
+    <div class="campo"><label for="l-conta">Conta</label><select id="l-conta" name="conta_id" required></select></div>
+    <div class="campo"><label for="l-categoria">Categoria</label><select id="l-categoria" name="categoria_id" required></select></div>
+    <div class="campo"><label for="l-desc">Descrição</label><input id="l-desc" name="descricao" maxlength="255" placeholder="Opcional"></div>
+    <div class="dialog-acoes">
+      <button type="button" class="btn" data-fechar>Cancelar</button>
+      <button type="submit" class="btn btn-primario">Salvar</button>
+    </div>
+  </form>
+</dialog>
+
+<!-- ===== Modal: conta ===== -->
+<dialog id="dlg-conta">
+  <form id="form-conta" novalidate>
+    <h2 id="conta-titulo">Nova conta</h2>
+    <input type="hidden" name="id">
+    <div class="campo"><label for="c-nome">Nome</label><input id="c-nome" name="nome" maxlength="60" required placeholder="Ex.: Nubank, Carteira"></div>
+    <div class="linha-campos">
+      <div class="campo">
+        <label for="c-tipo">Tipo</label>
+        <select id="c-tipo" name="tipo">
+          <option value="carteira">Carteira</option>
+          <option value="corrente">Conta corrente</option>
+          <option value="poupanca">Poupança</option>
+        </select>
+      </div>
+      <div class="campo"><label for="c-saldo">Saldo inicial (R$)</label><input id="c-saldo" name="saldo_inicial" type="number" step="0.01" value="0"></div>
+    </div>
+    <p class="dica" id="conta-dica"></p>
+    <div class="dialog-acoes">
+      <button type="button" class="btn" data-fechar>Cancelar</button>
+      <button type="submit" class="btn btn-primario">Salvar</button>
+    </div>
+  </form>
+</dialog>
+
+<!-- ===== Modal: categoria ===== -->
+<dialog id="dlg-categoria">
+  <form id="form-categoria" novalidate>
+    <h2 id="cat-titulo">Nova categoria</h2>
+    <input type="hidden" name="id">
+    <div class="campo"><label for="cat-nome">Nome</label><input id="cat-nome" name="nome" maxlength="60" required></div>
+    <div class="campo">
+      <label for="cat-tipo">Tipo</label>
+      <select id="cat-tipo" name="tipo">
+        <option value="D">Despesa</option>
+        <option value="R">Receita</option>
+      </select>
+    </div>
+    <div class="dialog-acoes">
+      <button type="button" class="btn" data-fechar>Cancelar</button>
+      <button type="submit" class="btn btn-primario">Salvar</button>
+    </div>
+  </form>
+</dialog>
+
+<!-- ===== Modal: confirmação ===== -->
+<dialog id="dlg-confirmar">
+  <form method="dialog">
+    <h2>Confirmar</h2>
+    <p id="confirmar-msg"></p>
+    <div class="dialog-acoes">
+      <button type="submit" class="btn" value="nao">Cancelar</button>
+      <button type="submit" class="btn btn-despesa" value="sim">Excluir</button>
+    </div>
+  </form>
+</dialog>
+
+<div id="toasts"></div>
+<script src="assets/js/comum.js"></script>
+<script src="assets/js/app.js"></script>
+</body>
+</html>

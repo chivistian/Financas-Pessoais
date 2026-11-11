@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Entrar - Finanças Pessoais</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body class="pagina-auth">
+  <div class="auth-wrap">
+    <section class="auth-hero">
+      <div class="marca" style="color:var(--primario-escuro);padding:0">
+        <span class="marca-logo" style="color:#fff">R$</span> Finanças Pessoais
+      </div>
+      <h1>Organize seu dinheiro em um só lugar.</h1>
+      <ul>
+        <li>Controle suas contas: carteira, corrente e poupança</li>
+        <li>Registre receitas e despesas por categoria</li>
+        <li>Saldo sempre atualizado automaticamente</li>
+        <li>Relatórios mensais por categoria e período</li>
+      </ul>
+    </section>
+
+    <section class="auth-card">
+      <div class="abas" role="tablist">
+        <button type="button" class="ativo" data-aba="login" role="tab">Entrar</button>
+        <button type="button" data-aba="cadastro" role="tab">Criar conta</button>
+      </div>
+
+      <!-- Login -->
+      <form id="form-login" novalidate>
+        <div class="campo">
+          <label for="login-email">E-mail</label>
+          <input id="login-email" name="email" type="email" autocomplete="username" required>
+        </div>
+        <div class="campo">
+          <label for="login-senha">Senha</label>
+          <input id="login-senha" name="senha" type="password" autocomplete="current-password" required>
+        </div>
+        <button type="submit" class="btn btn-primario btn-bloco">Entrar</button>
+        <div class="demo-box">
+          <strong>Quer só testar?</strong> Use a conta de demonstração.<br>
+          <button type="button" class="btn-link" id="btn-demo" style="padding-left:0">Preencher com dados de demonstração</button>
+        </div>
+      </form>
+
+      <!-- Cadastro -->
+      <form id="form-cadastro" class="oculto" novalidate>
+        <div class="campo">
+          <label for="cad-nome">Nome</label>
+          <input id="cad-nome" name="nome" maxlength="100" autocomplete="name" required>
+        </div>
+        <div class="campo">
+          <label for="cad-email">E-mail</label>
+          <input id="cad-email" name="email" type="email" maxlength="150" autocomplete="email" required>
+        </div>
+        <div class="linha-campos">
+          <div class="campo">
+            <label for="cad-senha">Senha</label>
+            <input id="cad-senha" name="senha" type="password" minlength="6" autocomplete="new-password" required>
+          </div>
+          <div class="campo">
+            <label for="cad-confirmar">Confirmar senha</label>
+            <input id="cad-confirmar" name="confirmar" type="password" autocomplete="new-password" required>
+          </div>
+        </div>
+        <p class="dica">Ao se cadastrar, criamos uma conta "Carteira" e categorias padrão para você começar.</p>
+        <button type="submit" class="btn btn-primario btn-bloco">Criar conta</button>
+      </form>
+    </section>
+  </div>
+
+  <div id="toasts"></div>
+  <script src="assets/js/comum.js"></script>
+  <script src="assets/js/login.js"></script>
+</body>
+</html>
